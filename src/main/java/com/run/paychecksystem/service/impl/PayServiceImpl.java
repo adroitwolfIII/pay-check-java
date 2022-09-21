@@ -9,6 +9,7 @@ import com.run.paychecksystem.mapper.PayMapper;
 import com.run.paychecksystem.mapper.UserMapper;
 import com.run.paychecksystem.service.PayService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -46,9 +47,11 @@ public class PayServiceImpl implements PayService {
             userMapper.insertSelective(user);
 
         }
+        Pay build = Pay.builder().userId(user.getId()).dateTime(payParams.getDate()).build();
 
-        payMapper.insertSelective(Pay.builder().dateTime(payParams.getDate())
-                .title(payParams.getTitle()).value(payParams.getValue()).userId(user.getId()).build());
+        BeanUtils.copyProperties(payParams,build);
+
+        payMapper.insertSelective(build);
 
         return BaseResponse.success("新增成功");
     }

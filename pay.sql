@@ -11,7 +11,7 @@
  Target Server Version : 50634
  File Encoding         : 65001
 
- Date: 13/09/2022 20:30:14
+ Date: 21/09/2022 19:29:02
 */
 
 SET NAMES utf8mb4;
@@ -25,17 +25,24 @@ CREATE TABLE `pay`  (
   `id` int(30) NOT NULL AUTO_INCREMENT,
   `date_time` datetime NULL DEFAULT NULL COMMENT '年/月 组成',
   `user_id` int(11) NULL DEFAULT NULL,
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工资标题',
-  `value` int(11) NULL DEFAULT NULL COMMENT '工资金额',
+  `jcgz` int(11) NULL DEFAULT NULL COMMENT '工资标题',
+  `ksf` int(11) NULL DEFAULT NULL COMMENT '课时费',
+  `jcjx` int(11) NULL DEFAULT NULL COMMENT '基础绩效',
+  `glgz` int(11) NULL DEFAULT NULL COMMENT '工龄工资',
+  `dhbz` int(11) NULL DEFAULT NULL COMMENT '电话补助',
+  `jtbz` int(11) NULL DEFAULT NULL COMMENT '交通补助',
+  `jbbz` int(11) NULL DEFAULT NULL COMMENT '加班补助',
+  `ldbx` int(11) NULL DEFAULT NULL COMMENT '劳动保险',
+  `sybx` int(11) NULL DEFAULT NULL COMMENT '失业保险',
+  `ylbx` int(11) NULL DEFAULT NULL COMMENT '医疗保险',
+  `grsds` int(11) NULL DEFAULT NULL COMMENT '个人所得说',
+  `gjj` int(11) NULL DEFAULT NULL COMMENT '公积金',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of pay
 -- ----------------------------
-INSERT INTO `pay` VALUES (13, '2022-09-01 00:00:00', 9, '11', 231231);
-INSERT INTO `pay` VALUES (14, '2022-07-01 00:00:00', 9, '222', 123);
-INSERT INTO `pay` VALUES (15, '2022-06-01 00:00:00', 9, '1123123', 12312312);
 
 -- ----------------------------
 -- Table structure for user
