@@ -4,9 +4,19 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/pay?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password: 112899
+    password: 123
     driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:
   mapper-locations: classpath:/mybatis/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+jwt:
+  # 发行者
+  name: ADROITWOLF
+  # 密钥, 经过Base64加密,去等 可自行替换 默认development
+  base64Secret: ZGV2ZWxvcG1lbnQ
+  #jwt中过期时间设置(day)
+  jwtExpires: 100
+  # refresh过期时间(day)
+  refreshExpires: 5

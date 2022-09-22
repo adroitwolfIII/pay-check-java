@@ -4,6 +4,7 @@ import com.run.paychecksystem.entity.User;
 import com.run.paychecksystem.entity.vo.BaseResponse;
 import com.run.paychecksystem.entity.vo.LoginParams;
 import com.run.paychecksystem.exception.BadRequestException;
+import com.run.paychecksystem.exception.UnAuthenticationException;
 import com.run.paychecksystem.mapper.UserMapper;
 import com.run.paychecksystem.service.TokenService;
 import com.run.paychecksystem.service.UserService;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.weekend.WeekendSqls;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -33,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public @NonNull BaseResponse login(@NonNull LoginParams loginParams) {
-        Example example = Example.builder(User.class).andWhere(WeekendSqls.<User>custom().andEqualTo(User::getUsername, loginParams.getP())).build();
+        Example example = Example.builder(User.class).andWhere(WeekendSqls.<User>custom().andEqualTo(User::getName, loginParams.getP())).build();
 
         User user = userMapper.selectOneByExample(example);
 
@@ -46,14 +49,28 @@ public class UserServiceImpl implements UserService {
         }
 
 
-        // 暂时只允许管理员登录
-        if (!Integer.valueOf(0).equals(user.getType())){
-
-            throw new BadRequestException("该账号暂时不允许登录");
-        }
-
+//        // 暂时只允许管理员登录
+//        if (!Integer.valueOf(0).equals(user.getType())){
+//
+//            throw new BadRequestException("该账号暂时不允许登录");
+//        }
 
 
         return BaseResponse.success(tokenService.buildAutoToken(user).getAccessToken());
+    }
+
+    @Override
+    public BaseResponse info(@NonNull String token) {
+        Integer id = tokenService.getUserIdByToken(token);
+
+        if (Objects.isNull(id)){
+            throw  new UnAuthenticationException("TOKEN错误，请重新登录");
+        }
+
+        User user = userMapper.selectByPrimaryKey(id);
+
+
+        return BaseResponse.success(User.builder().id(user.getId())
+                .name(user.getName()).type(user.getType()).build());
     }
 }

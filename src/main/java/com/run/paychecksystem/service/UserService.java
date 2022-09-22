@@ -16,4 +16,12 @@ public interface UserService {
      */
     @NonNull
     BaseResponse login(@NonNull LoginParams loginParams);
+
+
+    /**
+     * 功能描述: 根据token获取到用户的详细资料
+     * @Author: WHOAMI
+     * @Date: 2020/1/30 20:13
+     */
+    BaseResponse info(@NonNull String token);
 }

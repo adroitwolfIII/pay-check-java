@@ -5,11 +5,9 @@ import com.run.paychecksystem.entity.vo.LoginParams;
 import com.run.paychecksystem.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -21,6 +19,8 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UserController {
 
+    private static final String TOKEN = "Authentication";
+
     @Autowired
     UserService userService;
 
@@ -30,4 +30,12 @@ public class UserController {
 
         return userService.login(loginParams);
     }
+
+    @ApiOperation("获得用户信息")
+    @GetMapping("/info")
+    public BaseResponse info(HttpServletRequest request) {
+
+        return userService.info(request.getHeader(TOKEN));
+    }
+
 }

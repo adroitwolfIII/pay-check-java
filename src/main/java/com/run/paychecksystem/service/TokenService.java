@@ -18,4 +18,12 @@ public interface TokenService {
      * @Date: 2020/2/27 21:30
      */
     AutoToken buildAutoToken(User user);
+
+
+    /**
+     * 功能描述: 根据access_token令牌获取角色id
+     * @Author: WHOAMI
+     * @Date: 2020/1/30 17:58
+     */
+    Integer getUserIdByToken(String token);
 }

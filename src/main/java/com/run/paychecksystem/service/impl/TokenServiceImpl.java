@@ -1,8 +1,12 @@
 package com.run.paychecksystem.service.impl;
 
+import com.auth0.jwt.JWT;
 import com.run.paychecksystem.entity.User;
+import com.run.paychecksystem.entity.enums.RoleEnum;
 import com.run.paychecksystem.entity.vo.AutoToken;
+import com.run.paychecksystem.service.JwtService;
 import com.run.paychecksystem.service.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -15,10 +19,20 @@ import java.util.UUID;
 @Service
 public class TokenServiceImpl implements TokenService {
 
+    @Autowired
+    JwtService jwtService;
 
     @Override
     public AutoToken buildAutoToken(User user) {
-//    暂时使用UUID来生成token
-        return AutoToken.builder().accessToken(UUID.randomUUID().toString().replaceAll("-","")).build();
+        RoleEnum role = user.getType().equals(0)?RoleEnum.ADMIN:RoleEnum.USER;
+        return AutoToken.builder().accessToken(jwtService.generateToken(user,role)).build();
+    }
+
+
+    @Override
+    public Integer getUserIdByToken(String token) {
+
+        return JWT.decode(token).getClaim("userId").asInt();
+
     }
 }
