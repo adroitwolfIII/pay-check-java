@@ -49,4 +49,6 @@ public class Pay {
     private Integer ylbx;
 
     private Integer grsds;
+
+    private Integer gjj;
 }
