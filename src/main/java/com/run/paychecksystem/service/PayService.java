@@ -12,5 +12,5 @@ import com.run.paychecksystem.entity.vo.QueryParams;
 public interface PayService {
     BaseResponse insert(PayParams payParams);
 
-    BaseResponse search(QueryParams queryParams);
+    BaseResponse search(String token,QueryParams queryParams);
 }

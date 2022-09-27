@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * <pre>PayController</pre>
  *
@@ -16,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("pay")
 @RestController
 public class PayController {
+
+
+    private static final String TOKEN = "Authentication";
+
     @Autowired
     PayService payService;
 
@@ -26,10 +32,10 @@ public class PayController {
     }
 
 
-    @ApiOperation("查询工资")
+    @ApiOperation("用户查询工资")
     @GetMapping("/search")
-    public BaseResponse search(QueryParams queryParams){
-        return payService.search(queryParams);
+    public BaseResponse search(HttpServletRequest request,QueryParams queryParams){
+        return payService.search(request.getHeader(TOKEN),queryParams);
     }
 
 }

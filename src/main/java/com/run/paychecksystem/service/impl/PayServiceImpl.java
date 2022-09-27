@@ -8,6 +8,7 @@ import com.run.paychecksystem.entity.vo.QueryParams;
 import com.run.paychecksystem.mapper.PayMapper;
 import com.run.paychecksystem.mapper.UserMapper;
 import com.run.paychecksystem.service.PayService;
+import com.run.paychecksystem.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class PayServiceImpl implements PayService {
     @Autowired
     PayMapper payMapper;
 
+    @Autowired
+    TokenService tokenService;
 
     @Override
     public BaseResponse insert(PayParams payParams) {
@@ -57,12 +60,10 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-    public BaseResponse search(QueryParams queryParams) {
+    public BaseResponse search(String token,QueryParams queryParams) {
         // 获取用户id
-        Example example = Example.builder(User.class).andWhere(WeekendSqls.<User>custom().andEqualTo(User::getName, queryParams.getName())).build();
-        User user = userMapper.selectOneByExample(example);
-
-        Example example1 = Example.builder(Pay.class).andWhere(WeekendSqls.<Pay>custom().andEqualTo(Pay::getUserId, user.getId()).andBetween(Pay::getDateTime, queryParams.getStartDate(),queryParams.getEndDate())).build();
+        Integer id = tokenService.getUserIdByToken(token);
+        Example example1 = Example.builder(Pay.class).andWhere(WeekendSqls.<Pay>custom().andEqualTo(Pay::getUserId, id).andBetween(Pay::getDateTime, queryParams.getStartDate(),queryParams.getEndDate())).build();
 
         List<Pay> pays = payMapper.selectByExample(example1);
 

@@ -14,7 +14,6 @@ import java.util.Date;
 @Data
 @ToString
 public class QueryParams {
-    private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 
