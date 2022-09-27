@@ -28,27 +28,27 @@ public class Pay {
 
     private Integer userId;
 
-    private Integer jcgz;
+    private Integer jcgz = 0 ;
 
-    private Integer ksf;
+    private Integer ksf = 0;
 
-    private Integer jcjx;
+    private Integer jcjx = 0;
 
-    private Integer glgz;
+    private Integer glgz = 0;
 
-    private Integer dhbz;
+    private Integer dhbz = 0;
 
-    private Integer jtbz;
+    private Integer jtbz = 0;
 
-    private Integer jbbz;
+    private Integer jbbz = 0;
 
-    private Integer ldbx;
+    private Integer ldbx = 0;
 
-    private Integer sybx;
+    private Integer sybx = 0;
 
-    private Integer ylbx;
+    private Integer ylbx = 0;
 
-    private Integer grsds;
+    private Integer grsds = 0;
 
-    private Integer gjj;
+    private Integer gjj = 0;
 }
