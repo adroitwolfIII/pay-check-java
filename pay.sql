@@ -11,7 +11,7 @@
  Target Server Version : 50634
  File Encoding         : 65001
 
- Date: 21/09/2022 19:29:02
+ Date: 04/10/2022 15:32:31
 */
 
 SET NAMES utf8mb4;
@@ -38,7 +38,7 @@ CREATE TABLE `pay`  (
   `grsds` int(11) NULL DEFAULT NULL COMMENT '个人所得说',
   `gjj` int(11) NULL DEFAULT NULL COMMENT '公积金',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of pay
@@ -50,22 +50,19 @@ CREATE TABLE `pay`  (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `id` int(20) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '账号',
   `password` varchar(225) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '真实姓名',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '账号-真实姓名',
   `type` int(11) NULL DEFAULT NULL COMMENT '0 - 管理员 1- 普通用户',
+  `id_card` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '身份证号-用来找回普通账号',
+  `credit_card` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工资卡卡号',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', '202cb962ac59075b964b07152d234b70', 'admin', 0);
-INSERT INTO `user` VALUES (5, NULL, NULL, '334', 1);
-INSERT INTO `user` VALUES (6, NULL, NULL, '22', 1);
-INSERT INTO `user` VALUES (7, NULL, NULL, '222', 1);
-INSERT INTO `user` VALUES (8, NULL, NULL, '刘磊', 1);
-INSERT INTO `user` VALUES (9, NULL, NULL, '张傲', 1);
-INSERT INTO `user` VALUES (10, NULL, NULL, '张傲·', 1);
+INSERT INTO `user` VALUES (1, '202cb962ac59075b964b07152d234b70', 'admin', 0, NULL, NULL);
+INSERT INTO `user` VALUES (14, '202cb962ac59075b964b07152d234b70', 'zc', 0, '123', '123');
+INSERT INTO `user` VALUES (15, '202cb962ac59075b964b07152d234b70', 'za', 0, '123', '123');
 
 SET FOREIGN_KEY_CHECKS = 1;
