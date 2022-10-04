@@ -28,4 +28,8 @@ public class User {
     private String name;
 
     private Integer type;
+
+    private String idCard;
+
+    private String creditCard;
 }

@@ -3,6 +3,7 @@ package com.run.paychecksystem.service.impl;
 import com.run.paychecksystem.entity.User;
 import com.run.paychecksystem.entity.vo.BaseResponse;
 import com.run.paychecksystem.entity.vo.LoginParams;
+import com.run.paychecksystem.entity.vo.RegisterParams;
 import com.run.paychecksystem.exception.BadRequestException;
 import com.run.paychecksystem.exception.UnAuthenticationException;
 import com.run.paychecksystem.mapper.UserMapper;
@@ -10,13 +11,13 @@ import com.run.paychecksystem.service.TokenService;
 import com.run.paychecksystem.service.UserService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.weekend.WeekendSqls;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -72,5 +73,28 @@ public class UserServiceImpl implements UserService {
 
         return BaseResponse.success(User.builder().id(user.getId())
                 .name(user.getName()).type(user.getType()).build());
+    }
+
+    @Override
+    public BaseResponse register(@NonNull RegisterParams register) {
+        // username变量需要唯一，首先要进行合法性检查
+        Example build = Example.builder(User.class).andWhere(WeekendSqls.<User>custom().andEqualTo(User::getName, register.getName())).build();
+        List<User> list = userMapper.selectByExample(build);
+        if (!list.isEmpty()){
+            throw new BadRequestException("该用户名已被注册");
+        }
+
+
+//         只能注册普通用户
+        User user = User.builder().type(0).build();
+
+        BeanUtils.copyProperties(register,user);
+
+        userMapper.insertSelective(user);
+        // 说明注册失败
+        if(Objects.isNull(user.getId())){
+            throw new BadRequestException("注册失败");
+        }
+        return BaseResponse.success("注册成功");
     }
 }

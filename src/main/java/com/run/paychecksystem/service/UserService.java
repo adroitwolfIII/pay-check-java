@@ -2,6 +2,7 @@ package com.run.paychecksystem.service;
 
 import com.run.paychecksystem.entity.vo.BaseResponse;
 import com.run.paychecksystem.entity.vo.LoginParams;
+import com.run.paychecksystem.entity.vo.RegisterParams;
 import lombok.NonNull;
 
 public interface UserService {
@@ -24,4 +25,11 @@ public interface UserService {
      * @Date: 2020/1/30 20:13
      */
     BaseResponse info(@NonNull String token);
+
+
+    /**
+     * 注册用户
+     * @param register
+     */
+    BaseResponse register(@NonNull RegisterParams register);
 }
