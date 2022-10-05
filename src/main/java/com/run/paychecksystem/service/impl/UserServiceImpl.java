@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
 
 
 //         只能注册普通用户
-        User user = User.builder().type(0).build();
+        User user = User.builder().type(1).build();
 
         BeanUtils.copyProperties(register,user);
 
