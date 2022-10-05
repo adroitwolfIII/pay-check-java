@@ -1,6 +1,7 @@
 package com.run.paychecksystem.service;
 
 import com.run.paychecksystem.entity.vo.BaseResponse;
+import com.run.paychecksystem.entity.vo.ForgetParams;
 import com.run.paychecksystem.entity.vo.LoginParams;
 import com.run.paychecksystem.entity.vo.RegisterParams;
 import lombok.NonNull;
@@ -32,4 +33,12 @@ public interface UserService {
      * @param register
      */
     BaseResponse register(@NonNull RegisterParams register);
+
+
+
+    /**
+     * 用户密码找回
+     * @param forget
+     */
+    BaseResponse forget(@NonNull ForgetParams forget);
 }

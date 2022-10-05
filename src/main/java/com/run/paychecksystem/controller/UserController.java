@@ -1,6 +1,7 @@
 package com.run.paychecksystem.controller;
 
 import com.run.paychecksystem.entity.vo.BaseResponse;
+import com.run.paychecksystem.entity.vo.ForgetParams;
 import com.run.paychecksystem.entity.vo.LoginParams;
 import com.run.paychecksystem.entity.vo.RegisterParams;
 import com.run.paychecksystem.service.UserService;
@@ -46,6 +47,12 @@ public class UserController {
         return userService.register(registerParams);
     }
 
+    @ApiOperation("用户密码找回")
+    @PostMapping("/forget")
+    public BaseResponse forget(@RequestBody ForgetParams forgetParams) {
+
+        return userService.forget(forgetParams);
+    }
 
 
 }

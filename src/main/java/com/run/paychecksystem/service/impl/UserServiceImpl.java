@@ -2,6 +2,7 @@ package com.run.paychecksystem.service.impl;
 
 import com.run.paychecksystem.entity.User;
 import com.run.paychecksystem.entity.vo.BaseResponse;
+import com.run.paychecksystem.entity.vo.ForgetParams;
 import com.run.paychecksystem.entity.vo.LoginParams;
 import com.run.paychecksystem.entity.vo.RegisterParams;
 import com.run.paychecksystem.exception.BadRequestException;
@@ -96,5 +97,21 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("注册失败");
         }
         return BaseResponse.success("注册成功");
+    }
+
+    @Override
+    public BaseResponse forget(@NonNull ForgetParams forget) {
+        Example example = Example.builder(User.class).andWhere(WeekendSqls.<User>custom().andEqualTo(User::getType, 1).andEqualTo(User::getName,forget.getName()).andEqualTo(User::getIdCard, forget.getIdCard()).andEqualTo(User::getCreditCard, forget.getCreditCard())).build();
+
+        User user = userMapper.selectOneByExample(example);
+
+        if(Objects.isNull(user)){
+            throw new BadRequestException("该用户不存在或身份信息不正确，请重试！");
+        }
+
+        user.setPassword(forget.getPassword());
+
+        userMapper.updateByPrimaryKey(user);
+        return BaseResponse.success("操作成功");
     }
 }
