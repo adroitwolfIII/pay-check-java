@@ -1,6 +1,7 @@
 package com.run.paychecksystem.service.impl;
 
 import com.run.paychecksystem.entity.Pay;
+import com.run.paychecksystem.entity.PayRes4Manager;
 import com.run.paychecksystem.entity.User;
 import com.run.paychecksystem.entity.vo.BaseResponse;
 import com.run.paychecksystem.entity.vo.PayParams;
@@ -69,6 +70,13 @@ public class PayServiceImpl implements PayService {
 
 
         return BaseResponse.success(pays);
+    }
+
+    @Override
+    public BaseResponse search4admin(String token, QueryParams queryParams) {
+        List<PayRes4Manager> res = payMapper.selectPay4Admin(queryParams);
+
+        return BaseResponse.success(res);
     }
 
 }

@@ -19,4 +19,9 @@ public class QueryParams {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
+
+    private String name;
+
+
+
 }

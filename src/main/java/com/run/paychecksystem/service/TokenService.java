@@ -1,7 +1,10 @@
 package com.run.paychecksystem.service;
 
 import com.run.paychecksystem.entity.User;
+import com.run.paychecksystem.entity.enums.RoleEnum;
 import com.run.paychecksystem.entity.vo.AutoToken;
+
+import java.util.List;
 
 /**
  * <pre>TokenService</pre>
@@ -26,4 +29,15 @@ public interface TokenService {
      * @Date: 2020/1/30 17:58
      */
     Integer getUserIdByToken(String token);
+
+
+    /**
+     * 功能描述: 获取当前用户的角色
+     *
+     * @Param: [token]
+     * @Return: java.util.List<run.app.entity.enums.RoleEnum>
+     * @Author: WHOAMI
+     * @Date: 2020/1/30 17:57
+     */
+    List<RoleEnum> getRoles(String token);
 }

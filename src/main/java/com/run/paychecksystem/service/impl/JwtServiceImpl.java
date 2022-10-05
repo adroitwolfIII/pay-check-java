@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,8 +53,10 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public RoleEnum generateRole(String token) {
-        return JWT.decode(token).getClaim("role").as(RoleEnum.class);
+    public List<RoleEnum> generateRole(String token) {
+        List<RoleEnum> res = new ArrayList<>();
+        res.add(JWT.decode(token).getClaim("role").as(RoleEnum.class));
+        return res;
     }
 
 }

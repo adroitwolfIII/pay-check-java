@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.run.paychecksystem.mapper.PayMapper">
+    <resultMap id="BaseResultMap" type="com.run.paychecksystem.entity.PayRes4Manager">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="date_time" jdbcType="TIMESTAMP" property="dateTime"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="jcgz" jdbcType="INTEGER" property="jcgz"/>
+        <result column="ksf" jdbcType="INTEGER" property="ksf"/>
+        <result column="jcjx" jdbcType="INTEGER" property="jcjx"/>
+        <result column="glgz" jdbcType="INTEGER" property="glgz"/>
+        <result column="dhbz" jdbcType="INTEGER" property="dhbz"/>
+        <result column="jtbz" jdbcType="INTEGER" property="jtbz"/>
+        <result column="jbbz" jdbcType="INTEGER" property="jbbz"/>
+        <result column="ldbx" jdbcType="INTEGER" property="ldbx"/>
+        <result column="sybx" jdbcType="INTEGER" property="sybx"/>
+        <result column="ylbx" jdbcType="INTEGER" property="ylbx"/>
+        <result column="grsds" jdbcType="INTEGER" property="grsds"/>
+        <result column="gjj" jdbcType="INTEGER" property="gjj"/>
+
+    </resultMap>
+    <select id="selectPay4Admin" parameterType="com.run.paychecksystem.entity.vo.QueryParams" resultMap="BaseResultMap">
+        SELECT a.name, b.id,b.date_time , b.jcgz,b.ksf,b.jcjx,b.glgz,b.dhbz,b.jtbz,b.jbbz,b.ldbx,b.sybx,b.ylbx,b.grsds,b.gjj FROM user as a ,pay as b
+        <where>
+            <if test="query.name != '' and query.name != null">
+                a.name = #{query.name}
+            </if>
+            <if test="query.startDate != null">
+                and b.date_time BETWEEN #{query.startDate,jdbcType=TIMESTAMP} and #{query.endDate,jdbcType=TIMESTAMP}
+            </if>
+            and a.id = b.user_id
+        </where>
+    </select>
+</mapper>

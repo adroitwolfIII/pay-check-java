@@ -1,5 +1,7 @@
 package com.run.paychecksystem.controller;
 
+import com.run.paychecksystem.config.Role;
+import com.run.paychecksystem.entity.enums.RoleEnum;
 import com.run.paychecksystem.entity.vo.BaseResponse;
 import com.run.paychecksystem.entity.vo.PayParams;
 import com.run.paychecksystem.entity.vo.QueryParams;
@@ -25,6 +27,7 @@ public class PayController {
     @Autowired
     PayService payService;
 
+    @Role(require = {RoleEnum.ADMIN})
     @ApiOperation("新增工资")
     @PostMapping("/insert")
     public BaseResponse insert(@RequestBody PayParams payParams){
@@ -36,6 +39,14 @@ public class PayController {
     @GetMapping("/search")
     public BaseResponse search(HttpServletRequest request,QueryParams queryParams){
         return payService.search(request.getHeader(TOKEN),queryParams);
+    }
+
+
+    @Role(require = {RoleEnum.ADMIN})
+    @ApiOperation("管理员查询工资")
+    @GetMapping("/search4admin")
+    public BaseResponse search4admin(HttpServletRequest request,QueryParams queryParams){
+        return payService.search4admin(request.getHeader(TOKEN),queryParams);
     }
 
 }

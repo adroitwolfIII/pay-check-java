@@ -24,5 +24,5 @@ public interface JwtService {
 
     Date generateExpirationDate(String token);
 
-    RoleEnum generateRole(String token);
+    List<RoleEnum> generateRole(String token);
 }

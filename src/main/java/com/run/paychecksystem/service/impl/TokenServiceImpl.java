@@ -9,6 +9,7 @@ import com.run.paychecksystem.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -35,4 +36,11 @@ public class TokenServiceImpl implements TokenService {
         return JWT.decode(token).getClaim("userId").asInt();
 
     }
+
+
+    @Override
+    public List<RoleEnum> getRoles(String token) {
+        return jwtService.generateRole(token);
+    }
+
 }
