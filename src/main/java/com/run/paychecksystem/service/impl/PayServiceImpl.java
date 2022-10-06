@@ -79,4 +79,14 @@ public class PayServiceImpl implements PayService {
         return BaseResponse.success(res);
     }
 
+    @Override
+    public BaseResponse delItem(Integer id) {
+
+        payMapper.deleteByPrimaryKey(id);
+
+
+
+        return BaseResponse.success("删除成功");
+    }
+
 }

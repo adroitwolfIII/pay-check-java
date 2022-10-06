@@ -19,4 +19,9 @@ public interface PayService {
     BaseResponse search4admin(String token,QueryParams queryParams);
 
 
+
+    BaseResponse delItem(Integer id);
+
+
+
 }

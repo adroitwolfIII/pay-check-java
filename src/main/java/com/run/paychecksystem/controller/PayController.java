@@ -49,4 +49,12 @@ public class PayController {
         return payService.search4admin(request.getHeader(TOKEN),queryParams);
     }
 
+
+    @Role(require = {RoleEnum.ADMIN})
+    @ApiOperation("删除工资")
+    @PostMapping("/delItem/{id:\\d+}")
+    public BaseResponse delItem(@PathVariable("id")  Integer id){
+        return payService.delItem(id);
+    }
+
 }
