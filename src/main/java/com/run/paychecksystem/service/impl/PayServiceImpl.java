@@ -6,6 +6,7 @@ import com.run.paychecksystem.entity.User;
 import com.run.paychecksystem.entity.vo.BaseResponse;
 import com.run.paychecksystem.entity.vo.PayParams;
 import com.run.paychecksystem.entity.vo.QueryParams;
+import com.run.paychecksystem.exception.BadRequestException;
 import com.run.paychecksystem.mapper.PayMapper;
 import com.run.paychecksystem.mapper.UserMapper;
 import com.run.paychecksystem.service.PayService;
@@ -47,9 +48,9 @@ public class PayServiceImpl implements PayService {
 
         // 说明该员工数据库中没有资料
         if (Objects.isNull(user)){
-            user = User.builder().name(payParams.getName()).type(1).build();
-            userMapper.insertSelective(user);
-
+//            user = User.builder().name(payParams.getName()).type(1).build();
+//            userMapper.insertSelective(user);
+            throw new BadRequestException("未查找到该用户！");
         }
         Pay build = Pay.builder().userId(user.getId()).dateTime(payParams.getDate()).build();
 
