@@ -11,15 +11,17 @@ import com.run.paychecksystem.mapper.PayMapper;
 import com.run.paychecksystem.mapper.UserMapper;
 import com.run.paychecksystem.service.PayService;
 import com.run.paychecksystem.service.TokenService;
+import com.run.paychecksystem.util.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.weekend.WeekendSqls;
 
-import java.util.List;
-import java.util.Objects;
+import java.io.InputStream;
+import java.util.*;
 
 /**
  * <pre>PayServiceImpl</pre>
@@ -88,6 +90,36 @@ public class PayServiceImpl implements PayService {
 
 
         return BaseResponse.success("删除成功");
+    }
+
+    @Override
+    public BaseResponse importExcel(MultipartFile file) {
+
+        List<PayParams> pays  = ExcelUtils.readExcel("", PayParams.class, file);
+
+        Set<String> userError = new HashSet<>();
+
+        pays.forEach(x->{
+            Example example = Example.builder(User.class).andWhere(WeekendSqls.<User>custom().andEqualTo(User::getName, x.getName())).build();
+            User user = userMapper.selectOneByExample(example);
+            // 说明该员工数据库中没有资料
+            if (Objects.isNull(user)){
+                userError.add(x.getName());
+
+            }else{
+                Pay build = Pay.builder().userId(user.getId()).dateTime(x.getDate()).build();
+
+                BeanUtils.copyProperties(x,build);
+
+                payMapper.insertSelective(build);
+            }
+
+        });
+        if(userError.isEmpty()){
+            return BaseResponse.success("插入成功");
+        }else{
+            return BaseResponse.success(userError);
+        }
     }
 
 }

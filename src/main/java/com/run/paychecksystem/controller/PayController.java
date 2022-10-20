@@ -9,8 +9,10 @@ import com.run.paychecksystem.service.PayService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
 
 /**
  * <pre>PayController</pre>
@@ -32,6 +34,13 @@ public class PayController {
     @PostMapping("/insert")
     public BaseResponse insert(@RequestBody PayParams payParams){
         return payService.insert(payParams);
+    }
+
+    @ApiOperation(value = "导入excel,新增学生")
+    @PostMapping(value = "/readExcel")
+    public BaseResponse exportExcel (@RequestParam(value="uploadFile", required = false) MultipartFile file){
+
+        return  payService.importExcel(file);
     }
 
 
