@@ -23,4 +23,8 @@ public class BaseResponse {
         return new BaseResponse(200,"请求成功",data);
     }
 
+    public static BaseResponse success(){
+        return new BaseResponse(200,"请求成功",null);
+    }
+
 }

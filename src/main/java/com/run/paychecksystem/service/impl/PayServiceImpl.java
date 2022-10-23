@@ -116,7 +116,7 @@ public class PayServiceImpl implements PayService {
 
         });
         if(userError.isEmpty()){
-            return BaseResponse.success("插入成功");
+            return BaseResponse.success();
         }else{
             return BaseResponse.success(userError);
         }

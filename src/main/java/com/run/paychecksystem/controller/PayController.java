@@ -8,6 +8,7 @@ import com.run.paychecksystem.entity.vo.QueryParams;
 import com.run.paychecksystem.service.PayService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +39,7 @@ public class PayController {
 
     @ApiOperation(value = "导入excel,新增学生")
     @PostMapping(value = "/readExcel")
-    public BaseResponse exportExcel (@RequestParam(value="uploadFile", required = false) MultipartFile file){
+    public BaseResponse exportExcel (MultipartFile file){
 
         return  payService.importExcel(file);
     }
